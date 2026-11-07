@@ -813,6 +813,10 @@ render_plugins() {
         IFS=$'\x1f' read -r icon content state health stale _ _ <<<"$plugin_data"
         stale="${stale:-0}" # Default for backward compatibility
 
+        # External segments with empty content (e.g. a conditional indicator
+        # that is currently off) are hidden instead of drawn as empty boxes
+        [[ $is_external -eq 1 && -z "$content" ]] && continue
+
         # Apply threshold filter (skip for external plugins)
         [[ $is_external -eq 0 ]] && _is_hidden_by_threshold "$plugin_name" "$health" && continue
 
