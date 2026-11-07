@@ -99,6 +99,11 @@ _get_plugin_cache_ttl() {
 discover_plugins() {
     local plugins_str
     plugins_str=$(get_tmux_option "@powerkit_plugins" "${POWERKIT_DEFAULT_PLUGINS}")
+    # Optional second list rendered at the left of the plugins line
+    # (double layout only, see _apply_double_layout)
+    local left_str
+    left_str=$(get_tmux_option "@powerkit_plugins_left" "")
+    [[ -n "$left_str" ]] && plugins_str="${plugins_str:+${plugins_str},}${left_str}"
 
     [[ -z "$plugins_str" ]] && {
         log_warn "lifecycle" "No plugins configured in @powerkit_plugins"

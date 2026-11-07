@@ -167,6 +167,9 @@ powerkit_bootstrap() {
     # Get plugins list for keybinding conflict detection
     local plugins_str
     plugins_str=$(get_tmux_option "@powerkit_plugins" "${POWERKIT_DEFAULT_PLUGINS}")
+    local left_str
+    left_str=$(get_tmux_option "@powerkit_plugins_left" "")
+    [[ -n "$left_str" ]] && plugins_str="${plugins_str:+${plugins_str},}${left_str}"
 
     # Clear previous conflict log before checking
     _clear_conflict_log

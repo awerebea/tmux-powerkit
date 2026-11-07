@@ -1125,7 +1125,15 @@ _apply_double_layout() {
     # Build line 1 (right-aligned)
     local line1_content=""
     if [[ ${#line1_entities[@]} -gt 0 ]]; then
-        line1_content="#[bg=${status_bg}]#[align=right]"
+        line1_content="#[bg=${status_bg}]"
+        # @powerkit_plugins_left: extra plugin group at the left of the
+        # plugins line, rendered from its own list
+        local plugins_left
+        plugins_left=$(get_tmux_option "@powerkit_plugins_left" "")
+        if [[ -n "$plugins_left" && "$first_entity" != "plugins" ]]; then
+            line1_content+="#[align=left]#(POWERKIT_PLUGINS_OPTION=@powerkit_plugins_left ${POWERKIT_ROOT}/bin/powerkit-render left)"
+        fi
+        line1_content+="#[align=right]"
         line1_content+=$(_build_line_content line1_entities "right")
     fi
 

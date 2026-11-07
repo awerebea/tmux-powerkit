@@ -37,7 +37,7 @@ _render_cache_key() {
     local theme variant
     printf -v theme '%s' "$(get_tmux_option "@powerkit_theme" "${POWERKIT_DEFAULT_THEME}")"
     printf -v variant '%s' "$(get_tmux_option "@powerkit_theme_variant" "${POWERKIT_DEFAULT_THEME_VARIANT}")"
-    printf 'rendered_%s__%s__%s' "$side" "$theme" "$variant"
+    printf 'rendered_%s%s__%s__%s' "$side" "${POWERKIT_PLUGINS_OPTION:+__${POWERKIT_PLUGINS_OPTION#@powerkit_}}" "$theme" "$variant"
 }
 
 # TTL for render cache (matches status-interval and adapts to battery saver)

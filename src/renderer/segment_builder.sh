@@ -749,7 +749,7 @@ render_plugins() {
 
     # Get plugin list
     local plugins_str
-    plugins_str=$(get_tmux_option "@powerkit_plugins" "${POWERKIT_DEFAULT_PLUGINS}")
+    plugins_str=$(get_tmux_option "${POWERKIT_PLUGINS_OPTION:-@powerkit_plugins}" "${POWERKIT_DEFAULT_PLUGINS}")
     [[ -z "$plugins_str" ]] && return 0
 
     # Parse plugin list with group support
